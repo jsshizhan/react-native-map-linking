@@ -1,27 +1,14 @@
 {
-  "name": "react-native-map-linking",
-  "version": "1.0.1",
-  "description": "Linking to map for React Native",
+  "name": "react-native-map-linking-ym",
+  "version": "0.0.4",
+  "description": "Batteries-included form for react and react native",
   "main": "index.js",
-  "keywords": [
-    "react",
-    "native",
-    "map",
-    "linking"
-  ],
-  "author": {
-    "name": "starlight36",
-    "url": "https://github.com/starlight36"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "url": "https://github.com/starlight36/react-native-map-linking.git"
-  },
-  "bugs": {
-    "url": "https://github.com/starlight36/react-native-map-linking/issues"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "react": "^15.1.0",
-    "react-native": "^0.28.0"
+  "author": "shizhan",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://192.168.1.101:8081/repository/npm-hosted/"
   }
 }

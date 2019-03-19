@@ -34,26 +34,46 @@ function openDialog(urls) {
       });
   } else if (Platform.OS === 'android') {
     urls = urls.android;
-    return Promise.all(urls.map(element => Linking.canOpenURL(element[1])))
-      .then((results) => {
-        return urls.filter((element, index) => results[index]).map(url => ({
-          text: url[0],
-          onPress: () => {
-            Linking.openURL(url[1]);
-          },
-        }));
-      }).then(choices => {
-        // 系统内没有任何地图, 推荐下载一个
-        if (choices.length < 1) {
-          return Alert.alert('选择地图', '您还没有安装地图软件。', [
-            { text: '下载高德地图', onPress: () => Linking.openURL('http://mobile.amap.com') },
-            { text: '下载百度地图', onPress: () => Linking.openURL('http://map.baidu.com') },
-            { text: '取消' }
-          ]);
-        }
+    Linking.canOpenURL(urls[0][1]).
+    then((s1) => {
+      if(s1){
+        Linking.openURL(urls[0][1]);
+      }else{
+        Linking.canOpenURL(urls[1][1]).
+        then((s2) => {
+          if(s2){
+            Linking.openURL(urls[1][1]);
+          }else {
+            Alert.alert('选择地图', '您还没有安装地图软件。', [
+              { text: '下载高德地图', onPress: () => Linking.openURL('http://mobile.amap.com') },
+              { text: '下载百度地图', onPress: () => Linking.openURL('http://map.baidu.com') },
+              { text: '取消' }
+            ]);
+          }
+        }).catch((err) => Alert.alert('s2 An error occurred', err))
+      }
+    }).catch((err) => Alert.alert('s1 An error occurred', err))
 
-        return Alert.alert('选择地图', '请选择一个地图打开', [...choices, { text: '取消' }]);
-      });
+    // Promise.all(urls.map(element => Linking.canOpenURL(element[1])))
+    //   .then((results) => {
+    //     return urls.filter((element, index) => results[index]).map(url => ({
+    //       text: url[0],
+    //       onPress: () => {
+    //         Linking.openURL(url[1]);
+    //       },
+    //     }));
+    //   }).then(choices => {
+    //     // 系统内没有任何地图, 推荐下载一个
+    //     if (choices.length < 1) {
+    //       return Alert.alert('选择地图', '您还没有安装地图软件。', [
+    //         { text: '下载高德地图', onPress: () => Linking.openURL('http://mobile.amap.com') },
+    //         { text: '下载百度地图', onPress: () => Linking.openURL('http://map.baidu.com') },
+    //         { text: '取消' }
+    //       ]);
+    //     }
+
+    //     return Alert.alert('选择地图', '请选择一个地图打开', [...choices, { text: '取消' }]);
+    //   });
   }
 }
 
